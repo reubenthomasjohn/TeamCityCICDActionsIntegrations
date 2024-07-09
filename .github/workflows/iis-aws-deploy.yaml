@@ -1,0 +1,35 @@
+# name: Deploy to AWS EC2 IIS on Merge to Main
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
+
+#       - name: Setup .NET Core
+#         uses: actions/setup-dotnet@v1
+#         with:
+#           dotnet-version: "8.0" # Adjust this to your .NET Core version
+
+#       - name: Build and publish
+#         run: |
+#           dotnet restore
+#           dotnet publish -c Release -o ./publish
+
+#       - name: Deploy to AWS EC2
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.EC2_HOST }} # EC2 instance public IP or DNS (set in GitHub repository secrets)
+#           username: ${{ secrets.EC2_USERNAME }} # SSH username for your EC2 instance
+#           key: ${{ secrets.SSH_PRIVATE_KEY }} # Private SSH key for authentication
+#           script: |
+#             iisreset /stop
+#             scp -r ./publish/* ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/inetpub/wwwroot
+#             iisreset /start
