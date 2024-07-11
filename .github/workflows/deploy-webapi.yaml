@@ -34,3 +34,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Private SSH key for authentication
           source: "./publish/*"
           target: "C:/inetpub/wwwroot"
+          timeout: 120s
