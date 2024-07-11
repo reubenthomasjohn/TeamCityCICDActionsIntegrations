@@ -17,7 +17,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: "8.0" # Adjust this to your .NET Core version
+          dotnet-version: "7.0" # Adjust this to your .NET Core version
 
       - name: Build and publish
         run: |
@@ -31,6 +31,5 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }} # SSH username for your EC2 instance
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Private SSH key for authentication
           script: |
-            iisreset /stop
             scp -r ./publish/* ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/inetpub/wwwroot
             iisreset /start
