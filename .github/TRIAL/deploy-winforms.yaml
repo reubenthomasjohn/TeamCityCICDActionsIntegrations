@@ -34,3 +34,6 @@ jobs:
             iisreset /stop
             scp -r ./publish/* ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/inetpub/wwwroot
             iisreset /start
+# script: |
+          #   scp -r ./publish/* ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/inetpub/wwwroot
+          #   iisreset /start
