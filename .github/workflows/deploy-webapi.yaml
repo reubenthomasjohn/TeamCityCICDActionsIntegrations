@@ -32,6 +32,6 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }} # SSH username for your EC2 instance
           port: 22
           key: ${{ secrets.SSH_PRIVATE_KEY }} # Private SSH key for authentication
-          source: "./publish/*"
+          source: "./WebApi/publish/*"
           target: "C:/inetpub/wwwroot"
           timeout: 120s
