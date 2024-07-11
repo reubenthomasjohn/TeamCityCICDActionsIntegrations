@@ -21,6 +21,7 @@ jobs:
 
       - name: Build and publish
         run: |
+          cd WebApi
           dotnet restore
           dotnet publish -c Release -o ./publish
 
