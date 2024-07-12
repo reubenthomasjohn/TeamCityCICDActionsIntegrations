@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "WindowsFormsApp/**" # Trigger only on changes within the WebApi folder
+      - "WindowsFormsApp/**" # Trigger only on changes within the WindowsFormsApp folder
   workflow_dispatch:
 
 jobs:
