@@ -26,8 +26,11 @@ jobs:
           dotnet publish -c Release -o ./publish
 
       - name: Install expect
+        run: sudo apt-get update && sudo apt-get install -y expect
+
+      - name: Add SSH key to known_hosts
         run: |
-          sudo apt-get install expect
+          ssh-keyscan -H 54.173.94.91 >> ~/.ssh/known_hosts
 
       - name: Deploy to AWS EC2
         run: |
