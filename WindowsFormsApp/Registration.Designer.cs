@@ -43,7 +43,7 @@
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // label1wgwg
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(39, 26);

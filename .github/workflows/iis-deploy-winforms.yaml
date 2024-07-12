@@ -16,16 +16,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "4.8" # Adjust this to your .NET Core version
-
-      - name: Build and publish
+      - name: Install Mono
         run: |
-          cd WindowsFormsApp
-          dotnet restore
-          dotnet publish -c Release -o ./WindowsFormsApp
+          sudo apt-get update
+          sudo apt-get install -y mono-complete
+
+      - name: Restore NuGet packages
+        run: nuget restore WindowsFormsApp.sln
+
+      - name: Build the project
+        run: msbuild /p:Configuration=Release WindowsFormsApp.csproj
 
       - name: Install expect
         run: sudo apt-get update && sudo apt-get install -y expect openssh-client
@@ -43,7 +43,7 @@ jobs:
       - name: Deploy to AWS EC2
         run: |
           expect -c '
-          spawn scp -r -o StrictHostKeyChecking=no ./WebApi/WindowsFormsApp/ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/inetpub/wwwroot
+          spawn scp -r -o StrictHostKeyChecking=no ./WindowsFormsApp/bin/Release/ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/inetpub/wwwroot/WinFormsApp/
           sleep 3
           expect "${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}'\''s password:"
           sleep 3
