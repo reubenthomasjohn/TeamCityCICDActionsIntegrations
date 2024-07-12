@@ -25,12 +25,16 @@ jobs:
           dotnet restore
           dotnet publish -c Release -o ./publish
 
-      - name: Deploy to AWS EC2
+      - name: Install expect
         run: |
           sudo apt-get install expect
+
+      - name: Deploy to AWS EC2
+        run: |
+
           expect -c '
-          spawn ssh -o StrictHostKeyChecking=no ${{secrets.EC2_USERNAME}}@${{secrets.EC2_HOST}}
-          expect "${{secrets.EC2_USERNAME}}@${{secrets.EC2_HOST}}'\''s password:"
-          send "${{ secrets.SSH_PASSWORD }}\r"
-          send scp -r ./WebApi/publish/* ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/inetpub/wwwroot
+          spawn scp -r ./WebApi/publish/ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/inetpub/wwwroot
+          expect "${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}'\''s password:"
+          send "${{ secrets.SSH_PASSWORD}}\r"
+          interact
           '
