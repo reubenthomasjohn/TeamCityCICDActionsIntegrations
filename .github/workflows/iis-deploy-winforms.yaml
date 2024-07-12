@@ -1,9 +1,11 @@
-name: Deploy to AWS EC2 IIS on Merge to Main
+name: Deploy Windows Application Dotnet 4.8
 
 on:
   push:
     branches:
       - main
+    paths:
+      - "WindowsFormsApp/**" # Trigger only on changes within the WebApi folder
   workflow_dispatch:
 
 jobs:
@@ -17,13 +19,13 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: "7.0" # Adjust this to your .NET Core version
+          dotnet-version: "4.8" # Adjust this to your .NET Core version
 
       - name: Build and publish
         run: |
-          cd WebApi
+          cd WindowsFormsApp
           dotnet restore
-          dotnet publish -c Release -o ./publish
+          dotnet publish -c Release -o ./WindowsFormsApp
 
       - name: Install expect
         run: sudo apt-get update && sudo apt-get install -y expect openssh-client
@@ -41,7 +43,7 @@ jobs:
       - name: Deploy to AWS EC2
         run: |
           expect -c '
-          spawn scp -r -o StrictHostKeyChecking=no ./WebApi/publish/ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/inetpub/wwwroot
+          spawn scp -r -o StrictHostKeyChecking=no ./WebApi/WindowsFormsApp/ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/inetpub/wwwroot
           sleep 3
           expect "${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}'\''s password:"
           sleep 3

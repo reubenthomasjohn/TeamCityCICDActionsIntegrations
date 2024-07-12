@@ -1,0 +1,53 @@
+name: Deploy WebApi Dotnet Core 7.0
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "WebApi/**" # Trigger only on changes within the WebApi folder
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "7.0" # Adjust this to your .NET Core version
+
+      - name: Build and publish
+        run: |
+          cd WebApi
+          dotnet restore
+          dotnet publish -c Release -o ./publish
+
+      - name: Install expect
+        run: sudo apt-get update && sudo apt-get install -y expect openssh-client
+
+      - name: Create SSH directory and known_hosts file
+        run: |
+          mkdir -p ~/.ssh
+          touch ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Add SSH key to known_hosts
+        run: |
+          ssh-keyscan -H 54.173.94.91 >> ~/.ssh/known_hosts
+
+      - name: Deploy to AWS EC2
+        run: |
+          expect -c '
+          spawn scp -r -o StrictHostKeyChecking=no ./WebApi/publish/ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/inetpub/wwwroot
+          sleep 3
+          expect "${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}'\''s password:"
+          sleep 3
+          send "${{ secrets.SSH_PASSWORD }}\r"
+          sleep 3
+          interact
+          '

@@ -33,6 +33,7 @@ namespace WindowsFormsApp
 
         public void ClearControls()
         {
+            // Testing
             lblMessage.Visible = false;
             lblName.Text = string.Empty;
             txtName.Text = string.Empty;
