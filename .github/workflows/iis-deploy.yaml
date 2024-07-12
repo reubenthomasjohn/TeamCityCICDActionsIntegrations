@@ -40,10 +40,9 @@ jobs:
 
       - name: Deploy to AWS EC2
         run: |
-
           expect -c '
           spawn scp -r -o StrictHostKeyChecking=no ./WebApi/publish/ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/inetpub/wwwroot
           expect "${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}'\''s password:"
-          send "${{ secrets.SSH_PASSWORD}}\r"
+          send "${{ secrets.SSH_PASSWORD }}\r"
           interact
           '
