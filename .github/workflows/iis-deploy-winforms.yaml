@@ -50,7 +50,11 @@ jobs:
             expect \"${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}'s password:\"
             send \"${{ secrets.SSH_PASSWORD }}\r\"
             expect -re {.*> $}
+            send "stty -echo\r"
+            expect -re {.*> $}
             send \"xcopy C:\inetpub\wwwroot\WinFormsApp C:\Backup\uuid /E /I\r\"
+            expect -re {.*> $}
+            send "stty echo\r"
             interact
           "
 
