@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "WindowsFormsApp/**" # Trigger only on changes within the WindowsFormsApp folder
+    # paths:
+    #   - "WindowsFormsApp/**" # Trigger only on changes within the WindowsFormsApp folder
   workflow_dispatch:
 
 jobs:
@@ -50,7 +50,7 @@ jobs:
             expect \"${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}'s password:\"
             send \"${{ secrets.SSH_PASSWORD }}\r\"
             expect -re {.*>}
-            send \"xcopy C:\inetpub\wwwroot\WinFormsApp C:\Backup\uuid /E /I\r\"
+            send \"xcopy C:\\\\inetpub\\\\wwwroot\\\\WinFormsApp C:\\\\Backup\\\\uuid /E /I\r\"
             interact
           "
 
