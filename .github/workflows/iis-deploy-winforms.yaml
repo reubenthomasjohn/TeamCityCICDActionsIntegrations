@@ -46,13 +46,14 @@ jobs:
         run: |
           expect -c '
           spawn ssh "${{secrets.EC2_USERNAME}}@${{secrets.EC2_HOST}}"
-          sleep 6
+          sleep 3
           expect "${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}'\''s password:"
-          sleep 6
+          sleep 3
           send "${{ secrets.SSH_PASSWORD }}\r"
-          sleep 6
+          sleep 3
+          expect ">"
           xcopy C:\inetpub\wwwroot\WinFormsApp C:\Backup /E /I
-          sleep 6
+          sleep 3
           interact
           '
 
