@@ -45,7 +45,7 @@ jobs:
       - name: Take Backup
         run: |
           expect -c '
-          spawn ssh "${{secrets.EC2_USERNAME}}@${{secrets.EC2_HOST}}
+          spawn ssh "${{secrets.EC2_USERNAME}}@${{secrets.EC2_HOST}}"
           sleep 3
           expect "${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}'\''s password:"
           sleep 3
