@@ -44,13 +44,13 @@ jobs:
 
       - name: Take Backup
         run: |
-          uuid=$(uuidgen)
+          uuid=$(date +%Y%m%d%H%M)
           expect -c " 
             spawn ssh ${{secrets.EC2_USERNAME}}@${{secrets.EC2_HOST}}
             expect \"${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}'s password:\"
             send \"${{ secrets.SSH_PASSWORD }}\r\"
             expect -re {.*> $}
-            send \"xcopy C:\inetpub\wwwroot\WinFormsApp C:\Backup\$uuid /E /I\r\"
+            send \"xcopy C:\inetpub\wwwroot\WinFormsApp C:\Backup\uuid /E /I\r\"
             interact
           "
 
