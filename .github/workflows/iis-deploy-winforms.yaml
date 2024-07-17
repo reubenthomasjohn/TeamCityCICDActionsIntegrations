@@ -52,6 +52,7 @@ jobs:
           send "${{ secrets.SSH_PASSWORD }}\r"
           sleep 3
           xcopy C:\inetpub\wwwroot\WinFormsApp C:\Backup /E /I
+          sleep 3
           interact
           '
 
