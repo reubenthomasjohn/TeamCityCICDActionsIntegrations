@@ -42,17 +42,18 @@ jobs:
         run: |
           ssh-keyscan -H 54.173.94.91 >> ~/.ssh/known_hosts
 
-      # - name: Take Backup
-      #   run: |
-      #     expect -c '
-      #     spawn ssh -r -o StrictHostKeyChecking=no ./WindowsFormsApp/bin/Release/ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/C:/Backups/
-      #     sleep 3
-      #     expect "${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}'\''s password:"
-      #     sleep 3
-      #     send "${{ secrets.SSH_PASSWORD }}\r"
-      #     sleep 3
-      #     interact
-      #     '
+      - name: Take Backup
+        run: |
+          expect -c '
+          spawn ssh "${{secrets.EC2_USERNAME}}@${{secrets.EC2_HOST}}
+          sleep 3
+          expect "${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}'\''s password:"
+          sleep 3
+          send "${{ secrets.SSH_PASSWORD }}\r"
+          sleep 3
+          COPY C:\inetpub\wwwroot\WinFormsApp C:\
+          interact
+          '
 
       - name: Deploy to AWS EC2
         run: |
