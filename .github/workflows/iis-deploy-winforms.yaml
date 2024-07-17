@@ -51,6 +51,7 @@ jobs:
             send \"${{ secrets.SSH_PASSWORD }}\r\"
             expect -re {.*>}
             send \"xcopy C:\\\\inetpub\\\\wwwroot\\\\WinFormsApp C:\\\\Backup\\\\$uuid /E /I\r\"
+            expect -re {.*>}
             interact
           "
 
