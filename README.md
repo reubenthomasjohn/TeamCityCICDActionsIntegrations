@@ -13,4 +13,5 @@
    d. Build the project - Run the `msbuild` command to build the project. \
    e. Install `expect` - this is a library that is required to SSH into the Windows Server machine. \
    f,g. Create SSH directory and known_hosts file - We are creating a known_hosts file and adding the SSH key of our Windows server into the known hosts of the runner provisioned by Github. \
-   h. Deploy - A custom scripts used to `scp` our built files into our host machine. \
+   h. Take Backup - After SSHing into the Windows server system, use xcopy to copy the existing built files from inetpub\wwwroot\WinFormsApp to the Backup folder.
+   i. Deploy - A custom scripts used to `scp` our built files into our host machine. \
