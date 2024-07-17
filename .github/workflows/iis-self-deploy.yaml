@@ -16,11 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Mono
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y mono-complete
-
       - name: Restore NuGet packages
         run: nuget restore ./WindowsFormsApp/WindowsFormsApp.sln
 
@@ -28,19 +23,6 @@ jobs:
         run: |
           msbuild /p:Configuration=Release ./WindowsFormsApp/WindowsFormsApp.csproj
           ls ./WindowsFormsApp/bin
-
-      - name: Install expect
-        run: sudo apt-get update && sudo apt-get install -y expect openssh-client
-
-      - name: Create SSH directory and known_hosts file
-        run: |
-          mkdir -p ~/.ssh
-          touch ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
-
-      - name: Add SSH key to known_hosts
-        run: |
-          ssh-keyscan -H 54.173.94.91 >> ~/.ssh/known_hosts
 
       # - name: Take Backup
       #   run: |
