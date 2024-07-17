@@ -8,10 +8,10 @@
    This is specified by the `deploy` and `runs-on` directives.
 
    - Checkout repository: Takes the latest code from the main branch.
-   - Install Mono: A package used to support building of dotnet framework projects on ubuntu systems.
-   - Restore NuGet packages: Restore all the dependencies required for the project.
+   - Install `Mono`: A package used to support building of dotnet framework projects on ubuntu systems.
+   - Restore `NuGet` packages: Restore all the dependencies required for the project.
    - Build the project: Run the `msbuild` command to build the project.
    - Install `expect`: this is a library that is required to SSH into the Windows Server machine.
-   - Create SSH directory and known_hosts file: We are creating a known_hosts file and adding the SSH key of our Windows server into the known hosts of the runner provisioned by Github.
-   - Take Backup: After SSHing into the Windows server system, use xcopy to copy the existing built files from inetpub\wwwroot\WinFormsApp to the Backup folder.
+   - Create SSH directory and known_hosts file: We are creating a `known_hosts` file and adding the SSH key of our Windows server into the known hosts of the runner provisioned by Github.
+   - Take Backup: After SSHing into the Windows server system, use xcopy to copy the existing built files from `inetpub\wwwroot\WinFormsApp` to the Backup folder.
    - Deploy: A custom scripts used to `scp` our built files into our host machine.
