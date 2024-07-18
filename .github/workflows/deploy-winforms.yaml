@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    # paths:
-    #   - "WindowsFormsApp/**" # Trigger only on changes within the WindowsFormsApp folder
+    paths:
+      - "WindowsFormsApp/**" # Trigger only on changes within the WindowsFormsApp folder
   workflow_dispatch:
 
 jobs:

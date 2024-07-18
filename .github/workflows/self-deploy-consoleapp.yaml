@@ -1,5 +1,4 @@
-name: Deploy Windows Application Dotnet 4.8
-
+name: Deploy Windows Application Self-Hosted As Windows Service
 on:
   push:
     branches:

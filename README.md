@@ -15,3 +15,9 @@
    - Create SSH directory and known_hosts file: We are creating a `known_hosts` file and adding the SSH key of our Windows server into the known hosts of the runner provisioned by Github.
    - Take Backup: After SSHing into the Windows server system, use xcopy to copy the existing built files from `inetpub\wwwroot\WinFormsApp` to the Backup folder.
    - Deploy: A custom scripts used to `scp` our built files into our host machine.
+
+### TODO:
+
+- [] Self-deploy Console App as a Service
+- [] Self-deploy WebApi (Core App as a windows service, single file .exe)
+- [] Cpp application
