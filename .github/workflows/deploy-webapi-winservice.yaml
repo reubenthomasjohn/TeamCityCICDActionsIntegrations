@@ -1,0 +1,43 @@
+name: Deploy to Local Machine
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "SelfDeployCoreApi/**" # Trigger only on changes within the WebApi folder
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "7.x" # Use the appropriate .NET Core version
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build project
+        run: dotnet build --configuration Release
+
+      - name: Publish project
+        run: dotnet publish --configuration Release --runtime win-x64 --self-contained --output ./publish
+
+      - name: Deploy as Windows Service
+        run: |
+          sc stop ServiceName || true
+          sc delete ServiceName || true
+          New-Service -Name "ServiceName" -BinaryPathName "`"$PWD\publish\WebApi.exe`"" `
+                      -DisplayName "Service Display Name" `
+                      -Description "Description of service"
+          sc start ServiceName
+        shell: powershell
+## One location to move the .exe to
+## Start the service (Service name already there)
+## Copy the web.config from backup folder to current folder.

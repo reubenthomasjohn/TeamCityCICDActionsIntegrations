@@ -1,0 +1,32 @@
+name: Deploy Console App to Local Machine
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "SelfDeployFrameworkConsoleApp/**" # Trigger only on changes within the WebApi folder
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Build project
+        run: msbuild /p:Configuration=Release
+
+      - name: Copy output to deploy directory
+        run: |
+          mkdir -p C:\deploy
+          cp -r ./bin/Release/* C:\deploy
+
+      - name: Install and start service
+        run: |
+          ./install-service.ps1
+        shell: powershell
